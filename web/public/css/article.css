@@ -1,0 +1,33 @@
+.commont {
+    width: 980px;
+    margin: 0 auto;
+}
+
+.post {
+    width: 100%;
+}
+
+.post div {
+    width: 100%;
+}
+
+.postTitle {
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 2rem;
+    font-weight: 400;
+    color: #606975;
+    text-shadow: 5px 2px 9px rgba(0, 0, 0, 0.3);
+}
+
+.postTime {
+    padding-top: 10px;
+    font-family: "Noto Sans SC";
+    text-align: center;
+    text-shadow: 20px 12px 2px rgba(0, 0, 0, 0.3);
+}
+
+.postCont {
+    padding-top: 80px;
+}

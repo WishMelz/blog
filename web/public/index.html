@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/toast.css">
+    <style>
+        #img {
+            width: 800px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div id="editor">
+            <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
+        </div>
+    </div>
+    <button id="btn">获取</button>
+    <!-- <img id="img" src="" alt=""> -->
+    <div id="img"></div>
+</body>
+<script src="./js/jq.js"></script>
+<script src="./js/wangEditor.min.js"></script>
+<script type="text/javascript">
+    var E = window.wangEditor
+    var editor = new E('#editor')
+        // editor.customConfig.uploadImgShowBase64 = true
+    editor.customConfig.uploadImgServer = '/upfile'
+    editor.customConfig.uploadFileName = 'photo'
+        // 或者 var editor = new E( document.getElementById('editor') )
+
+    editor.customConfig.uploadImgHooks = {
+        success: function(xhr, editor, result) {
+            console.log('图片上传并返回结果,图片插入成功')
+        },
+        fail: function(xhr, editor, result) {
+            console.log('图片上传并返回结果，但图片插入错误')
+        },
+        error: function(xhr, editor) {
+            console.log('图片上传出错')
+        },
+        timeout: function(xhr, editor) {
+            console.log('图片上传超时')
+        },
+        customInsert: function(insertImg, result, editor) {
+            console.log(' 图片上传并返回结果')
+            var url = result.url
+            insertImg(url)
+        }
+    }
+
+    editor.create()
+    document.querySelector("#btn").onclick = function() {
+        // let zz = document.querySelector(".w-e-text").innerHTML
+        // console.log(zz);
+        // document.querySelector("#img").innerHTML = zz
+        let cc = editor.$textElem[0]
+
+        console.log(editor.txt.html());
+        // let zz =
+        // $('#img').append(editor.txt.html())
+        $.ajax({
+            type: "post",
+            url: "/forBlog",
+            data: {
+                title: "标题",
+                cont: editor.txt.html(),
+            },
+            success: function(data) {
+                console.log(data);
+
+            }
+        })
+
+    }
+</script>
+<script src="./js/toast.js"></script>
+<script>
+    $.Toast("正确", "文本内容", "success", {
+        stack: true,
+        has_icon: true,
+        has_close_btn: true,
+        fullscreen: false,
+        timeout: 3000,
+        sticky: false,
+        has_progress: true,
+        rtl: false,
+    });
+</script>
+
+</html>

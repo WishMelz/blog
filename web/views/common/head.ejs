@@ -1,0 +1,42 @@
+<div class="header" id="showstar">
+    <div class="inners">
+        <canvas id="canvas"></canvas>
+        <div class="title">
+            <div class="inner">
+                <h1>WishMeLzzz</h1>
+                <h2>生活其实很有趣</h2>
+            </div>
+        </div>
+    </div>
+    <div class="nav">
+        <ul>
+            <li><a href="">首页</a></li>
+            <li><a href="">其他</a></li>
+            <li><a href="">首页</a></li>
+            <li><a href="">其他</a></li>
+        </ul>
+    </div>
+    <div class="poem-map">
+        <div class="poem-border poem-left"></div>
+        <div class="poem-border poem-right"></div>
+        <h2>来两句诗</h2>
+        <div id="peom_sentence">宿空房，秋夜长，夜长无寐天不明。</div>
+        <div id="poem_info">【唐代】白居易《上阳白发人》</div>
+    </div>
+    <div class="poem-map-sctipt">
+    </div>
+</div>
+
+<div>
+    <script src="./js/bgcanvas.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        jinrishici.load(function(result) {
+            // 自己的处理逻辑
+            let strTitle = `${result.data.content}`;
+            let strOrg = `【${result.data.origin.dynasty}】 ${result.data.origin.author} 《${result.data.origin.title}》`;
+            $("#peom_sentence").text(strTitle);
+            $('#poem_info').text(strOrg)
+        });
+    </script>
+</div>

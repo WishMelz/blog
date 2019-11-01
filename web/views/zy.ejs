@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="./js/jq.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+
+<body>
+    <div class="home">
+        <%- include('./common/head.ejs') %>
+            <div class="main">
+                <div class="area">
+                    <div class="item clearfix">
+                        <div class="item-title">
+                            <a href="">这里是文章标题</a>
+                            <div class="item-ctime">
+                                @2019-10-20 12:45:12
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <el-bitton>das</el-bitton> -->
+                    <% for(var i = 0;i<data.length;i++){ %>
+                        <div class="item clearfix">
+                            <div class="item-title">
+                                <a href="
+                                ">
+                                    <%= data[i].title %>
+                                </a>
+                                <div class="item-ctime">
+                                    @
+                                    <%= data[i].ctime %>
+                                </div>
+                            </div>
+                        </div>
+                        <%}%>
+                </div>
+            </div>
+    </div>
+</body>
+<script>
+    let goAre = function(id) {
+        $.ajax({
+            type: "get",
+            url: "/art",
+            data: {
+                id: id
+            },
+            success: function(data) {
+                console.log(data);
+            }
+        })
+    }
+</script>
+</html
