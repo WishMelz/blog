@@ -1,0 +1,31 @@
+# Build and Release Folders
+bin-debug/
+bin-release/
+[Oo]bj/
+[Bb]in/
+
+# Other files and folders
+.settings/
+
+# Executables
+*.swf
+*.air
+*.ipa
+*.apk
+
+# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
+# should NOT be excluded as they contain compiler settings and other important
+# information for Eclipse / Flash Builder.
+# 忽略包
+node_modules
+# 忽略配置文件
+config.js
+# 上传的图片忽略
+server/public/upload/*.png
+server/public/upload/*.jpg
+server/public/upload/*.gif
+server/public/upload/*.svg
+server/public/upload/*.webp
+server/public/upload/*.jpeg
+server/public/upload/*.bmp
+# upload/*
