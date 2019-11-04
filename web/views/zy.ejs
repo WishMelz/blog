@@ -8,11 +8,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/toast.css">
     <script src="./js/jq.js"></script>
-    <!-- 引入样式 -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-    <!-- 引入组件库 -->
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </head>
 
 <body>
@@ -33,8 +30,8 @@
                     <% for(var i = 0;i<data.length;i++){ %>
                         <div class="item clearfix">
                             <div class="item-title">
-                                <a href="
-                                ">
+                                <a href="javascript:;
+                                " onclick="goAre('<%= data[i].id %>')">
                                     <%= data[i].title %>
                                 </a>
                                 <div class="item-ctime">
@@ -46,20 +43,27 @@
                         <%}%>
                 </div>
             </div>
+            <footer>
+                Copyright © 2019 WishMeLzzz
+            </footer>
     </div>
 </body>
+<script src="./js/toast.js"></script>
 <script>
     let goAre = function(id) {
-        $.ajax({
-            type: "get",
-            url: "/art",
-            data: {
-                id: id
-            },
-            success: function(data) {
-                console.log(data);
-            }
-        })
+        sessionStorage.setItem("myBlogId", id);
+        window.location = "/art"
     }
+
+    $.Toast("", "页面获取成功", "success", {
+        stack: true,
+        has_icon: true,
+        has_close_btn: true,
+        fullscreen: false,
+        timeout: 3000,
+        sticky: false,
+        has_progress: true,
+        rtl: false,
+    });
 </script>
 </html

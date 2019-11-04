@@ -1,5 +1,5 @@
 .commont {
-    width: 980px;
+    width: 51%;
     margin: 0 auto;
 }
 
@@ -9,6 +9,7 @@
 
 .post div {
     width: 100%;
+    box-sizing: border-box;
 }
 
 .postTitle {

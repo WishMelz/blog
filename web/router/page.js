@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require("../db")
 const dbName = "blogBody"
 router.get("/zy", (req, res) => {
-    let sql = `select title,ctime from ${dbName}`
+    let sql = `select title,ctime,id from ${dbName}`
     db.query(sql, (err, data) => {
         if (err) return console.log(err);
         res.render('zy', {
@@ -14,13 +14,25 @@ router.get("/zy", (req, res) => {
 })
 router.get("/art", (req, res) => {
     let sql = `select * from ${dbName} where id = ?`;
-    db.query(sql, 4, (err, data) => {
+    // db.query(sql, 4, (err, data) => {
+    //     if (err) return console.log(err);
+    //     // console.log(data[0]);
+    //     res.render('article', {
+    //         data: data[0]
+    //     })
+    // })
+    res.render('article')
+})
+router.get("/blog/:id", (req, res) => {
+    let id = req.params.id
+    let sql = `select * from ${dbName} where id = ?`;
+    db.query(sql, id, (err, data) => {
         if (err) return console.log(err);
-        // console.log(data[0]);
-        res.render('article', {
+        res.json({
             data: data[0]
         })
     })
-
 })
+
+
 module.exports = router;

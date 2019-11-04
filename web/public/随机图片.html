@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <img src="" alt="">
+</body>
+<script src="./js/jq.js"></script>
+<script>
+    let zz = function() {
+        $.ajax({
+            type: "get",
+            url: "https://source.unsplash.com/random",
+            success: function(data) {
+                console.log(data);
+                $("img")[0].src = data
+            }
+        })
+    }
+    zz()
+</script>
+
+</html>
