@@ -18,6 +18,7 @@ app.set("views", __dirname + "/views")
 app.use(require("./router/UpFile"))
 app.use(require("./router/forBlog"))
 app.use(require("./router/page"))
+app.use(require("./router/admin"))
 app.use(router)
 app.listen(6001, () => {
     console.log("http://127.0.0.1:6001");

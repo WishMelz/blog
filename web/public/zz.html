@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/admin.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="home">
+        <div class="common clearfix">
+            <div class="left">
+                <ul>
+                    <li>首页标题</li>
+                    <li>导航栏</li>
+                    <li>文章</li>
+                    <li>页脚</li>
+                </ul>
+            </div>
+            <div class="right clearfix">
+                <div class="item clearfix" id="a-title">
+                    <h2>页面标题</h2>
+                    <div>
+                        <label for="">大标题：</label>
+                        <input type="text" class="input" id="titleName">
+                    </div>
+                    <div>
+                        <label for="">副标题：</label>
+                        <input type="text" class="input" id="smallName">
+                    </div>
+                    <div>
+                        <button class="btn" onclick="upTitle()">修改</button>
+                    </div>
+                </div>
+                <div class="item" style="display: none;">
+                    <h2>导航栏</h2>
+                    <div id="a-nav">
+                    </div>
+                    <div>
+                        <input type="text" class="input">
+                        <span>URL:</span>
+                        <input type="text" class="input">
+                        <button class="btn" id="addNav">添加</button>
+                    </div>
+                </div>
+                <div class="item clearfix" style="display: none;">
+                    <h2>文章</h2>
+                    <div class="wz-left">
+
+                    </div>
+                    <div class="wz-right">
+                        <label for="">标题：</label>
+                        <input type="text" class="input" id="wz-title">
+                        <div id="editor">
+                            <p> <i>在这里填写正文</i> </p>
+                        </div>
+                        <button class="btn" onclick="addWz()">添加</button>
+                        <button class="btn" onclick="updateWz()">修改</button>
+                    </div>
+                </div>
+                <div class="item" style="display: none;">
+                    <h2>页脚</h2>
+                    <label for="">页脚：</label>
+                    <input type="text" class="input">
+                    <button class="btn" id="upFoot">修改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./js/jq.js"></script>
+<script src="./js/wangEditor.min.js"></script>
+<script src="./lib/template-web.js"></script>
+<script type="text/template" id="navTem">
+    {{each data}}
+    <div>
+        <input type="text" class="input" value="{{$value.navName}}">
+        <span>URL:</span>
+        <input type="text" class="input" value="{{$value.navLink}}">
+        <button class="btn" id="btn" data-id="{{$value.id}}">修改</button>
+        <button class="btn" id="btn2" data-id="{{$value.id}}">删除</button>
+    </div>
+    {{ /each}}
+</script>
+<script type="text/template" id="wzTem">
+    {{each data}}
+    <div>
+        <p>{{$value.title}}</p>
+        <button class="btn" onclick="getWzList({{$value.id}})">修改</button>
+        <button class="btn" onclick="delWz({{$value.id}})">删除</button>
+    </div>
+    {{ /each}}
+</script>
+<script>
+    // 修改文章id
+    let alertWzId = '';
+    // tab切换
+    $('.left li').click(function() {
+        for (var i = 0; i < $('.item').length; i++) {
+            $('.item')[i].style.display = "none"
+        }
+        let index = $(this).index();
+        $('.item')[index].style.display = "block"
+    })
+
+    // 获取首页标题
+    let getTitle = function() {
+        $.ajax({
+            type: "get",
+            url: "/adminTitle",
+            success: function(data) {
+                if (data.code != 200) {
+                    alert("首页标题获取失败")
+                } else {
+                    $('#titleName').val(data.data.titleName);
+                    $("#smallName").val(data.data.smallName)
+                }
+            }
+        })
+    }
+    getTitle()
+
+    // 修改标题
+    let upTitle = function() {
+            $.ajax({
+                type: "put",
+                url: "/adminTitle",
+                data: {
+                    titleName: $('#titleName').val(),
+                    smallName: $("#smallName").val()
+                },
+                success: function(data) {
+                    if (data.code != 200) {
+                        alert("首页标题修改失败")
+                    } else {
+                        getTitle()
+                        alert("修改成功")
+                    }
+                }
+            })
+        }
+        // 获取导航栏
+    let getNav = function() {
+        $.ajax({
+            type: "get",
+            url: "/adminNav",
+            success: function(data) {
+                if (data.code != 200) {
+                    alert("导航栏获取失败")
+                } else {
+                    let strHtml = template("navTem", data)
+                    $('#a-nav').html(strHtml)
+                }
+            }
+        })
+    }
+    getNav()
+        // 修改导航栏
+    $("#a-nav").on("click", "#btn", function() {
+            let id = $(this).data("id");
+            let navName = $(this).prev().prev().prev().val();
+            let navLink = $(this).prev().val();
+            $.ajax({
+                type: "put",
+                url: "/adminNav/" + id,
+                data: {
+                    navName,
+                    navLink
+                },
+                success: function(data) {
+                    if (data.code != 200) {
+                        alert("修改失败")
+                    } else {
+                        getNav()
+                        alert("修改成功")
+                    }
+                }
+            })
+        })
+        //添加导航
+    $("#addNav").on("click", function() {
+            let navName = $(this).prev().prev().prev().val();
+            let navLink = $(this).prev().val();
+            let _this = $(this)
+            $.ajax({
+                type: "post",
+                url: "/adminNav",
+                data: {
+                    navName,
+                    navLink
+                },
+                success: function(data) {
+                    if (data.code != 200) {
+                        alert("添加失败")
+                    } else {
+                        _this.prev().prev().prev().val(" ");
+                        _this.prev().val(" ");
+                        getNav()
+                        alert("添加成功")
+                    }
+                }
+            })
+        })
+        // 删除导航栏
+    $("#a-nav").on("click", "#btn2", function() {
+        let flg = confirm("确定删除？")
+        if (!flg) return
+        let id = $(this).data("id");
+        $.ajax({
+            type: "delete",
+            url: "/adminNav/" + id,
+            success: function(data) {
+                if (data.code != 200) {
+                    alert("删除失败")
+                } else {
+                    getNav()
+                    alert("删除成功")
+                }
+            }
+        })
+    })
+
+    // 获取文章
+    let getWz = function() {
+        $.ajax({
+            type: "get",
+            url: "/adminWz",
+            success: function(data) {
+                if (data.code != 200) {
+                    alert("文章获取失败")
+                } else {
+                    let strHtml = template("wzTem", data)
+                    $('.wz-left').html(strHtml)
+                        // console.log(strHtml);
+                }
+            }
+        })
+    }
+    getWz()
+        // 根据id获取文章回显
+    let getWzList = function(id) {
+            $.ajax({
+                type: "get",
+                url: "/adminWz/" + id,
+                success: function(data) {
+                    if (data.code != 200) {
+                        alert("文章获取失败")
+                    } else {
+                        // let strHtml = template("wzTem", data)
+                        // $('.wz-left').append(strHtml)
+                        $(".w-e-text").html(data.data.cont)
+                        alertWzId = data.data.id;
+                        $('#wz-title').val(data.data.title)
+                    }
+                }
+            })
+        }
+        // 删除文章
+    let delWz = function(id) {
+            let flg = confirm("确定删除？")
+            if (!flg) return
+            $.ajax({
+                type: "delete",
+                url: "/adminDelWz/" + id,
+                success: function(data) {
+                    if (data.code != 200) {
+                        alert(data.msg)
+                    } else {
+                        getWz()
+                        alert(data.msg)
+                    }
+                }
+            })
+        }
+        // 修改文章
+    let updateWz = function() {
+            if (alertWzId == "") return alert("没有id")
+            $.ajax({
+                type: "put",
+                url: "/adminWz/" + alertWzId,
+                data: {
+                    title: $('#wz-title').val(),
+                    cont: editor.txt.html()
+                },
+                success: function(data) {
+                    if (data.code != 200) {
+                        alert("修改失败")
+                    } else {
+                        getWz()
+                        alert("修改成功")
+                    }
+                }
+            })
+        }
+        // 添加文章
+    let addWz = function() {
+            $.ajax({
+                type: "post",
+                url: "/forBlog",
+                data: {
+                    title: $('#wz-title').val(),
+                    cont: editor.txt.html(),
+                },
+                success: function(data) {
+                    if (data.code != 200) {
+                        alert("发布失败")
+                    } else {
+                        getWz()
+                        alert("发布成功")
+                    }
+
+                }
+            })
+        }
+        // 获取页脚
+    let getFoot = function() {
+        $.ajax({
+            type: "get",
+            url: "/adminFoot",
+            success: function(data) {
+                if (data.code != 200) {
+                    alert("页脚获取失败")
+                } else {
+                    $("#upFoot").prev().val(data.data.footerName)
+                }
+
+            }
+        })
+    }
+    getFoot()
+        // 修改页脚
+    $("#upFoot").on("click", function() {
+        $.ajax({
+            type: "put",
+            url: "/adminFoot",
+            data: {
+                footerName: $(this).prev().val()
+            },
+            success: function(data) {
+                if (data.code != 200) {
+                    alert("修改失败")
+                } else {
+                    $("#upFoot").prev().val(data.data.footerName)
+                }
+
+            }
+        })
+    })
+
+    let zz = function() {
+            $.ajax({
+                type: "post",
+                url: "/login",
+                data: {
+                    username: "admins",
+                    password: "zhangxu1107"
+                },
+                success: function(data) {
+                    console.log(data);
+                    // $("img")[0].src = data
+                }
+            })
+        }
+        // zz()
+</script>
+<script type="text/javascript">
+    var E = window.wangEditor
+    var editor = new E('#editor')
+        // editor.customConfig.uploadImgShowBase64 = true
+    editor.customConfig.uploadImgServer = '/upfile'
+    editor.customConfig.uploadFileName = 'photo'
+        // 或者 var editor = new E( document.getElementById('editor') )
+
+    editor.customConfig.uploadImgHooks = {
+        success: function(xhr, editor, result) {
+            console.log('图片上传并返回结果,图片插入成功')
+        },
+        fail: function(xhr, editor, result) {
+            console.log('图片上传并返回结果，但图片插入错误')
+        },
+        error: function(xhr, editor) {
+            console.log('图片上传出错')
+        },
+        timeout: function(xhr, editor) {
+            console.log('图片上传超时')
+        },
+        customInsert: function(insertImg, result, editor) {
+            console.log(' 图片上传并返回结果')
+            var url = result.url
+            insertImg(url)
+        }
+    }
+
+    editor.create()
+        // document.querySelector("#btn").onclick = function() {
+        //     // let zz = document.querySelector(".w-e-text").innerHTML
+        //     // console.log(zz);
+        //     // document.querySelector("#img").innerHTML = zz
+        //     let cc = editor.$textElem[0]
+
+    //     console.log(editor.txt.html());
+    //     // let zz =
+    //     // $('#img').append(editor.txt.html())
+    //     $.ajax({
+    //         type: "post",
+    //         url: "/forBlog",
+    //         data: {
+    //             title: "标题",
+    //             cont: editor.txt.html(),
+    //         },
+    //         success: function(data) {
+    //             console.log(data);
+
+    //         }
+    //     })
+
+    // }
+</script>
+
+</html>

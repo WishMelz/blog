@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router();
 const db = require("../db")
+const request = require('request');
 const dbName = "blogBody"
 router.get("/zy", (req, res) => {
     let sql = `select title,ctime,id from ${dbName}`
@@ -34,5 +35,15 @@ router.get("/blog/:id", (req, res) => {
     })
 })
 
+router.get("/wnl", (req, res) => {
+    request('https://www.sojson.com/open/api/lunar/json.shtml', function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body) // Show the HTML for the baidu homepage.
+        } else {
+            console.log(response, body);
+
+        }
+    })
+})
 
 module.exports = router;

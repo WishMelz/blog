@@ -11,16 +11,20 @@ router.post("/forBlog", (req, res) => {
         dayjs().format('YYYY-MM-DD HH:mm:ss')
     ]
     db.query(sql, data, (err, rest) => {
-            if (err) {
-                console.log(err);
+        if (err) {
+            res.json({
+                coed: "400",
+                msg: "错误"
+            })
+            return
+        } else {
+            res.json({
+                code: 200,
+                msg: "发布成功"
+            })
 
-            } else {
-                console.log("zzz");
-
-            }
-        })
-        // console.log(req.body);
-
+        }
+    })
 })
 
 module.exports = router;
