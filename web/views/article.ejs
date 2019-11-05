@@ -31,6 +31,7 @@
                     </div>
                 </div>
             </div>
+            <%- include('./common/footer.ejs') %>
     </div>
 </body>
 <script src="./lib/template-web.js"></script>
@@ -47,8 +48,22 @@
     </div>
 </script>
 <script>
+    // 获取id
+    function GetRequest() {
+        var url = location.search; //获取url中"?"符后的字串 
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
+
     function getArticle() {
-        let id = sessionStorage.getItem("myBlogId");
+        let id = GetRequest().id;
         if (!id) {
             $.Toast("文章获取失败", "即将跳转到首页", "error", {
                 stack: true,

@@ -22,6 +22,8 @@ router.get("/art", (req, res) => {
     //         data: data[0]
     //     })
     // })
+    // console.log(req.params);
+
     res.render('article')
 })
 router.get("/blog/:id", (req, res) => {

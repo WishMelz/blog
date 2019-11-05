@@ -1,0 +1,20 @@
+<footer>
+</footer>
+<script>
+    // 获取页脚
+    let getFoot = function() {
+        $.ajax({
+            type: "get",
+            url: "/adminFoot",
+            success: function(data) {
+                if (data.code != 200) {
+                    alert("页脚获取失败")
+                } else {
+                    $("footer").html(data.data.footerName)
+                }
+
+            }
+        })
+    }
+    getFoot()
+</script>

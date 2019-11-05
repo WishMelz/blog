@@ -34,7 +34,9 @@
     width: 100%;
     height: 40vh;
     background: #000;
-    background: url(http://pic.tsmp4.net/api/fengjing/img.php) center center / cover no-repeat;
+    background: url(http://itsse.cn:8000) center center / cover no-repeat;
+    /* http://api.btstu.cn/sjbz/?lx=dongman */
+    /* http://pic.tsmp4.net/api/fengjing/img.php */
 }
 
 .header h1 {

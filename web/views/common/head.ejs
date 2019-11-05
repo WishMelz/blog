@@ -28,7 +28,28 @@
 <div>
     <!-- <script src="./js/bgcanvas.js"></script> -->
     <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script src="./lib/template-web.js"></script>
+    <script type="text/template" id="navTem">
+        {{each data}}
+        <li><a href="{{$value.navLink}}">{{$value.navName}}</a></li>
+        {{/each}}
+    </script>
     <script type="text/javascript">
+        let getNav = function() {
+            $.ajax({
+                type: "get",
+                url: "/adminNav",
+                success: function(data) {
+                    if (data.code != 200) {
+                        alert("导航栏获取失败")
+                    } else {
+                        let strHtml = template("navTem", data)
+                        $('.nav ul').html(strHtml)
+                    }
+                }
+            })
+        }
+        getNav()
         jinrishici.load(function(result) {
             // 自己的处理逻辑
             let strTitle = `${result.data.content}`;
@@ -47,15 +68,8 @@
         can.fillStyle = color2();
 
         var words = Array(256).join("1").split("");
-        //设置一个包含256个空元素的数组，join("1")用来把数组里的元素拼接成字符串，split("")过滤掉数组里的空元素
-
         setInterval(draw, 50);
 
-
-        // can.font="30px 微软雅黑"; //只设置一个不生效，一定要两个属性都设
-        // //绘制实心的文本：绘制的文本，文本的坐标x，文本的坐标y
-        // can.fillText("黑客帝国",100,100);
-        // // setInterval(draw,50);
         function draw() {
             //can.fillRect()画一个实心矩形:坐标x，坐标y，矩形宽，举行高
             can.fillStyle = 'rgba(0,0,0,0.05)';

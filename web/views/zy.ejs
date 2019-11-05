@@ -43,16 +43,14 @@
                         <%}%>
                 </div>
             </div>
-            <footer>
-                Copyright © 2019 WishMeLzzz
-            </footer>
+            <%- include('./common/footer.ejs') %>
     </div>
 </body>
 <script src="./js/toast.js"></script>
 <script>
     let goAre = function(id) {
         sessionStorage.setItem("myBlogId", id);
-        window.location = "/art"
+        window.location = "/art?id=" + id
     }
 
     $.Toast("数据正常", "页面获取成功", "success", {
