@@ -7,7 +7,28 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/admin.css">
-    <title>Document</title>
+    <script src="./js/jq.js"></script>
+    <script>
+        function isLogin() {
+            let token = sessionStorage.getItem("token");
+            if (!token) {
+                location.href = "/login"
+                return
+            }
+            $.ajax({
+                type: "post",
+                url: "/isLogin",
+                data: {
+                    token: token
+                },
+                success: function(data) {
+                    // if())
+                }
+            })
+        }
+        isLogin()
+    </script>
+    <title>后台</title>
 </head>
 
 <body>
@@ -71,8 +92,10 @@
             </div>
         </div>
     </div>
+    <div class="loading">
+        <img src="./images/loading.jpg" alt="">
+    </div>
 </body>
-<script src="./js/jq.js"></script>
 <script src="./js/wangEditor.min.js"></script>
 <script src="./lib/template-web.js"></script>
 <script type="text/template" id="navTem">
@@ -419,6 +442,10 @@
     //     })
 
     // }
+    function Loading() {
+        $(".loading")[0].style.display = "none"
+    }
+    Loading()
 </script>
 
 </html>

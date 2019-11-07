@@ -11,43 +11,60 @@ setInterval(function() {
     }, 60000)
     // 登录
 router.post("/login", (req, res) => {
-        if (timeArr.length >= 10) {
+    if (timeArr.length >= 10) {
+        res.json({
+            code: "400",
+            msg: "请勿频繁操作"
+        })
+        return
+    }
+    timeArr.push("1")
+    let username = req.body.username;
+    let password = req.body.password;
+    const use = crypto.createHmac('sha256', username)
+        .update('WishMeLzzZ')
+        .digest('hex');
+    const pwd = crypto.createHmac('sha256', password)
+        .update('WishMeLzzZ')
+        .digest('hex');
+    let sql = `select * from ${dbName} where username=? and password=?`;
+    // window.sessionStorage.set("s", "123")
+    db.query(sql, [use, pwd], (err, data) => {
+
+        if (err) {
             res.json({
                 code: "400",
-                msg: "请勿频繁操作"
+                msg: "服务器错误"
             })
             return
         }
-        timeArr.push("1")
-        let username = req.body.username;
-        let password = req.body.password;
-        const use = crypto.createHmac('sha256', username)
-            .update('WishMeLzzZ')
-            .digest('hex');
-        const pwd = crypto.createHmac('sha256', password)
-            .update('WishMeLzzZ')
-            .digest('hex');
-        let sql = `select * from ${dbName} where username=? and password=?`;
-        // window.sessionStorage.set("s", "123")
-        db.query(sql, [use, pwd], (err, data) => {
-
-            if (err) {
+        if (data.length == 0) {
+            res.json({
+                code: "400",
+                msg: "错误"
+            })
+            return
+        }
+        res.json({
+            code: "200",
+            token: use
+        })
+    })
+})
+router.post("/isLogin", (req, res) => {
+        let token = req.body.token;
+        let sql = `select * from blogUser where username = ?`;
+        db.query(sql, token, (err, data) => {
+            if (err || data.length == 0) {
                 res.json({
-                    code: "400",
-                    msg: "服务器错误"
-                })
-                return
-            }
-            if (data.length == 0) {
-                res.json({
-                    code: "400",
+                    coed: "400",
                     msg: "错误"
                 })
                 return
             }
             res.json({
-                code: "200",
-                token: use
+                code: 200,
+                msg: "token正确"
             })
         })
     })
