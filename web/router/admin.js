@@ -3,8 +3,22 @@ const router = express.Router();
 const crypto = require('crypto');
 const db = require("../db")
 const dbName = "blogUser";
-// 登录
+let timeArr = [];
+setInterval(function() {
+        if (timeArr[0]) {
+            timeArr.splice(0, 1)
+        }
+    }, 60000)
+    // 登录
 router.post("/login", (req, res) => {
+        if (timeArr.length >= 10) {
+            res.json({
+                code: "400",
+                msg: "请勿频繁操作"
+            })
+            return
+        }
+        timeArr.push("1")
         let username = req.body.username;
         let password = req.body.password;
         const use = crypto.createHmac('sha256', username)
@@ -16,23 +30,24 @@ router.post("/login", (req, res) => {
         let sql = `select * from ${dbName} where username=? and password=?`;
         // window.sessionStorage.set("s", "123")
         db.query(sql, [use, pwd], (err, data) => {
+
             if (err) {
                 res.json({
-                    coed: "400",
+                    code: "400",
                     msg: "服务器错误"
                 })
                 return
             }
             if (data.length == 0) {
                 res.json({
-                    coed: "400",
+                    code: "400",
                     msg: "错误"
                 })
                 return
             }
             res.json({
-                coed: "200",
-                token: "dasd"
+                code: "200",
+                token: use
             })
         })
     })
