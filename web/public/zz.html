@@ -22,7 +22,10 @@
                     token: token
                 },
                 success: function(data) {
-                    // if())
+                    if (data.code != 200) {
+                        location.href = "/login"
+                        return
+                    }
                 }
             })
         }
