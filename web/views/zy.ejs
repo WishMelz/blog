@@ -1,65 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+<%- include('./common/logo.ejs') %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="./css/reset.css">
-    <link rel="stylesheet" href="./css/index.css">
-    <link rel="stylesheet" href="./css/toast.css">
-    <script src="./js/jq.js"></script>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <link rel="stylesheet" href="./css/reset.css">
+        <link rel="stylesheet" href="./css/index.css">
+        <link rel="stylesheet" href="./css/toast.css">
+        <script src="./js/jq.js"></script>
+    </head>
 
-<body>
-    <div class="home">
-        <%- include('./common/head.ejs') %>
-            <div class="main">
-                <div class="area">
-                    <div class="item clearfix">
-                        <div class="item-title">
-                            <a href="">这里是文章标题</a>
-                            <div class="item-ctime">
-                                @2019-10-20 12:45:12
-                            </div>
-                        </div>
-                    </div>
-                    <% for(var i = 0;i<data.length;i++){ %>
+    <body>
+        <div class="home">
+            <%- include('./common/head.ejs') %>
+                <div class="main">
+                    <div class="area">
                         <div class="item clearfix">
                             <div class="item-title">
-                                <a href="javascript:;
-                                " onclick="goAre('<%= data[i].id %>')">
-                                    <%= data[i].title %>
-                                </a>
+                                <a href="">这里是文章标题</a>
                                 <div class="item-ctime">
-                                    @
-                                    <%= data[i].ctime %>
+                                    @2019-10-20 12:45:12
                                 </div>
                             </div>
                         </div>
-                        <%}%>
+                        <% for(var i = 0;i<data.length;i++){ %>
+                            <div class="item clearfix">
+                                <div class="item-title">
+                                    <a href="javascript:;
+                                " onclick="goAre('<%= data[i].id %>')">
+                                        <%= data[i].title %>
+                                    </a>
+                                    <div class="item-ctime">
+                                        @
+                                        <%= data[i].ctime %>
+                                    </div>
+                                </div>
+                            </div>
+                            <%}%>
+                    </div>
                 </div>
-            </div>
-            <%- include('./common/footer.ejs') %>
-    </div>
-</body>
-<script src="./js/toast.js"></script>
-<script>
-    let goAre = function(id) {
-        sessionStorage.setItem("myBlogId", id);
-        window.location = "/art?id=" + id
-    }
+                <%- include('./common/footer.ejs') %>
+        </div>
+    </body>
+    <script src="./js/toast.js"></script>
+    <script>
+        let goAre = function(id) {
+            sessionStorage.setItem("myBlogId", id);
+            window.location = "/art?id=" + id
+        }
 
-    $.Toast("数据正常", "页面获取成功", "success", {
-        stack: true,
-        has_icon: true,
-        has_close_btn: true,
-        fullscreen: false,
-        timeout: 3000,
-        sticky: false,
-        has_progress: true,
-        rtl: false,
-    });
-</script>
-</html
+        $.Toast("数据正常", "页面获取成功", "success", {
+            stack: true,
+            has_icon: true,
+            has_close_btn: true,
+            fullscreen: false,
+            timeout: 3000,
+            sticky: false,
+            has_progress: true,
+            rtl: false,
+        });
+    </script>
+    </html

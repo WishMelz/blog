@@ -1,92 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+<%- include('./common/logo.ejs') %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="./css/reset.css">
-    <link rel="stylesheet" href="./css/index.css">
-    <link rel="stylesheet" href="./css/article.css">
-    <link rel="stylesheet" href="./css/toast.css">
-    <script src="./js/jq.js"></script>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <link rel="stylesheet" href="./css/reset.css">
+        <link rel="stylesheet" href="./css/index.css">
+        <link rel="stylesheet" href="./css/article.css">
+        <link rel="stylesheet" href="./css/toast.css">
+        <script src="./js/jq.js"></script>
+    </head>
 
-<body>
-    <div class="home">
-        <%- include('./common/head.ejs') %>
-            <div class="main">
-                <div class="commont">
-                    <div class="post" id="post">
-                        <div class="postTitle">
-                            这里是文章标题
-                        </div>
-                        <div class="postTime">
+    <body>
+        <div class="home">
+            <%- include('./common/head.ejs') %>
+                <div class="main">
+                    <div class="commont">
+                        <div class="post" id="post">
+                            <div class="postTitle">
+                                这里是文章标题
+                            </div>
+                            <div class="postTime">
 
-                        </div>
-                        <div class="postCont">
+                            </div>
+                            <div class="postCont">
 
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <%- include('./common/footer.ejs') %>
-    </div>
-</body>
-<script src="./lib/template-web.js"></script>
-<script src="./js/toast.js"></script>
-<script type="text/template" id="wztem">
-    <div class="postTitle">
-        {{data.title}}
-    </div>
-    <div class="postTime">
-        #发布时间 {{data.ctime}}
-    </div>
-    <div class="postCont">
-        {{@ data.cont }}
-    </div>
-</script>
-<script>
-    // 获取id
-    function GetRequest() {
-        var url = location.search; //获取url中"?"符后的字串 
-        var theRequest = new Object();
-        if (url.indexOf("?") != -1) {
-            var str = url.substr(1);
-            strs = str.split("&");
-            for (var i = 0; i < strs.length; i++) {
-                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                <%- include('./common/footer.ejs') %>
+        </div>
+    </body>
+    <script src="./lib/template-web.js"></script>
+    <script src="./js/toast.js"></script>
+    <script type="text/template" id="wztem">
+        <div class="postTitle">
+            {{data.title}}
+        </div>
+        <div class="postTime">
+            #发布时间 {{data.ctime}}
+        </div>
+        <div class="postCont">
+            {{@ data.cont }}
+        </div>
+    </script>
+    <script>
+        // 获取id
+        function GetRequest() {
+            var url = location.search; //获取url中"?"符后的字串 
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                }
             }
+            return theRequest;
         }
-        return theRequest;
-    }
 
-    function getArticle() {
-        let id = GetRequest().id;
-        if (!id) {
-            $.Toast("文章获取失败", "即将跳转到首页", "error", {
-                stack: true,
-                has_icon: true,
-                has_close_btn: true,
-                fullscreen: false,
-                timeout: 3000,
-                sticky: false,
-                has_progress: true,
-                rtl: false,
-            });
-            setTimeout(function() {
-                window.location = "/zy"
-            }, 3000)
-
-        }
-        $.ajax({
-            type: "get",
-            url: "/blog/" + id,
-            success: function(data) {
-                let sHtml = template("wztem", data)
-                $("#post").html(sHtml)
-                $.Toast("成功", "文章获取成功", "success", {
+        function getArticle() {
+            let id = GetRequest().id;
+            if (!id) {
+                $.Toast("文章获取失败", "即将跳转到首页", "error", {
                     stack: true,
                     has_icon: true,
                     has_close_btn: true,
@@ -96,10 +76,31 @@
                     has_progress: true,
                     rtl: false,
                 });
+                setTimeout(function() {
+                    window.location = "/zy"
+                }, 3000)
+
             }
-        })
-    }
-    getArticle()
-</script>
+            $.ajax({
+                type: "get",
+                url: "/blog/" + id,
+                success: function(data) {
+                    let sHtml = template("wztem", data)
+                    $("#post").html(sHtml)
+                    $.Toast("成功", "文章获取成功", "success", {
+                        stack: true,
+                        has_icon: true,
+                        has_close_btn: true,
+                        fullscreen: false,
+                        timeout: 3000,
+                        sticky: false,
+                        has_progress: true,
+                        rtl: false,
+                    });
+                }
+            })
+        }
+        getArticle()
+    </script>
 
 </html>
