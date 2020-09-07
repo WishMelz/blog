@@ -10,7 +10,7 @@
 }
 
 .header .title {
-    /* background: url(https://img.xjh.me/random_img.php?type=bg&ctype=nature&return=302) center center / cover no-repeat rgb(34, 34, 34); */
+    background: url(https://img.xjh.me/random_img.php?type=bg&ctype=nature&return=302) center center / cover no-repeat rgb(34, 34, 34);
     overflow: hidden;
     width: 100%;
     height: 40vh;
