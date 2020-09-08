@@ -141,6 +141,8 @@ export default {
 
 .header .nav ul {
   text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
 .header .nav li {

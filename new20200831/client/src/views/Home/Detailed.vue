@@ -29,9 +29,7 @@ export default {
         .then(res => {
           this.fullscreenLoading = false;
           this.blogData = res;
-          console.log(document.title);
           document.title = document.title + ' | ' + res.title
-          console.log(document.title);
         })
         .catch(err => {
           this.fullscreenLoading = false;
