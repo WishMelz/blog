@@ -20,5 +20,4 @@ yarn build
 yarn lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+请求全部都在 @/api/axios 内。有请求拦截和响应拦截。都是刚学的，不是很完善。
