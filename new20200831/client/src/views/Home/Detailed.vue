@@ -3,13 +3,12 @@
     <div class="post" id="post" v-if="!fullscreenLoading">
       <div class="postTitle">{{blogData.title}}</div>
       <div class="postTime">@ {{blogData.ctime | getTime}}</div>
-      <div class="postCont" v-html="blogData.html"></div>
+      <div class="postCont markdown-body" v-html="blogData.html"></div>
     </div>
   </div>
 </template>
 
 <script>
-import "mavon-editor/dist/css/index.css";
 export default {
   data() {
     return {
