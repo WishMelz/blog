@@ -35,6 +35,10 @@ const routes = [
     children: [
       ...backstage
     ]
+  },
+  {
+    path:"*",
+    redirect:"/404"
   }
 
 ];

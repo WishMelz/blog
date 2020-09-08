@@ -129,7 +129,7 @@ router.get('/blog/:id', (req, res) => {
 })
 
 
-// 路由
+//#region  路由
 router.get('/routers', (req, res) => {
     let sql = `select * from routers`;
     conn.query(sql, (err, data) => {
@@ -206,6 +206,7 @@ router.post('/routers', (req, res) => {
     })
 })
 
+//#endregion
 
 //#region 站点
 

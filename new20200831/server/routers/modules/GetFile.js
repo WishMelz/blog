@@ -24,53 +24,6 @@ router.post('/upload', upload.single('image'), (req, res) => {
             msg: "上传成功",
             data: `${ip}:${port}/upload/` + fileName
         })
-        // if (filetype == 1) {
-        // let sql1 = `INSERT INTO files set ?`;
-        // let data1 = { weburl: imgUrl + '/upload/' + fileName, ctime: Date.now(), filename: fileName }
-        // conn.query(sql1, data1, (err, data) => {
-        //     if (err) {
-        //         res.json({
-        //             code: 400,
-        //             msg: "上传失败"
-        //         })
-        //     } else {
-        //         res.json({
-        //             data: { webPic: imgUrl + '/upload/' + fileName },
-        //             code: 200,
-        //             msg: "上传成功"
-        //         })
-        //     }
-        // })
-
-        // return;
-        // }
-        // //     oss仓库地址          要上传文件的地址
-        // let result = await client.put('/files/' + fileName, './public/upload/' + fileName);
-        // if (result.res.status != 200) {
-        //     res.json({
-        //         code: 400,
-        //         msg: "上传失败"
-        //     })
-        // } else {
-        //     let sql = `INSERT INTO files set ?`;
-        //     let data = { weburl: imgUrl + '/upload/' + fileName, ctime: Date.now(), ossurl: result.url, filename: fileName };
-
-        //     conn.query(sql, data, (err, data) => {
-        //         if (err) {
-        //             res.json({
-        //                 code: 400,
-        //                 msg: "上传失败"
-        //             })
-        //         } else {
-        //             res.json({
-        //                 data: { intPic: result.url, webPic: imgUrl + '/upload/' + fileName },
-        //                 code: 200,
-        //                 msg: "上传成功"
-        //             })
-        //         }
-        //     })
-
-        // }
     })
 })
 module.exports = router

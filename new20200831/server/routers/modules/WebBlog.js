@@ -127,27 +127,6 @@ router.get('/seting', (req, res) => {
         }
     })
 })
-// router.put('/seting', (req, res) => {
-//     let type = req.body.type;
-//     let data = req.body.data;
-//     console.log(req.body);
-//     return
-//     let sql = `select title,subtitle from setting where id = 1`;
-//     conn.query(sql, (err, data) => {
-//         if (err) {
-//             res.json({
-//                 code: 400,
-//                 msg: "服务器错误！！！"
-//             })
-//         } else {
-//             res.json({
-//                 code: 200,
-//                 msg: "获取成功",
-//                 data
-//             })
-//         }
-//     })
-// })
 
 //#endregion
 module.exports = router

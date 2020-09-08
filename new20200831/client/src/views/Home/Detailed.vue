@@ -19,8 +19,9 @@ export default {
   methods: {
     getDataList() {
       let id = this.$route.query.p;
+ 
       if (!id) {
-        this.$route.push("/404");
+        this.$router.push("/404");
         return;
       }
       this.fullscreenLoading = true;

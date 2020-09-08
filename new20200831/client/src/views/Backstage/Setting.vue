@@ -12,6 +12,7 @@
           <el-button :disabled="flg" @click="sub">更新</el-button>
         </el-form-item>
       </el-form>
+       <el-divider></el-divider>
       <el-row>
         <el-col>页脚设置：</el-col>
         <el-col :span="12">

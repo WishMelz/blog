@@ -41,18 +41,6 @@
                 <el-menu-item index="/be/setting">站点设置</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
-            <!-- <el-menu-item index="music">
-              <i class="el-icon-s-promotion"></i>
-              <span slot="title">博客音乐</span>
-            </el-menu-item>
-            <el-menu-item index="musiclist">
-              <i class="el-icon-s-promotion"></i>
-              <span slot="title">音乐列表</span>
-            </el-menu-item>-->
-            <!-- <el-menu-item index="fileslist">
-              <i class="el-icon-s-promotion"></i>
-              <span slot="title">历史文件</span>
-            </el-menu-item>-->
           </el-menu>
         </el-aside>
         <el-main style="padding:10px">
