@@ -77,7 +77,6 @@ export default {
       this.$http
         .get("be/routers")
         .then(res => {
-          console.log(res);
           this.dataList = res;
           this.fullscreenLoading = false;
         })

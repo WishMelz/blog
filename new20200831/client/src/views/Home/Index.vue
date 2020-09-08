@@ -16,7 +16,7 @@
     <div class="area">
       <div class="item clearfix" v-for="(v,i) in dataList" :key="i">
         <div class="item-title">
-          <router-link :to="'/detailed?p='+v.id">
+          <router-link :to="'/detailed?p='+v.id" target="_blank">
             <a>{{v.title}}</a>
           </router-link>
           <div class="item-ctime">@ {{v.ctime | getTime}}</div>

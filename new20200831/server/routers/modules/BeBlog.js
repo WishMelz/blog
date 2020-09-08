@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const conn = require('../../db');
-const  { secret } = require('../../config')
+const { secret } = require('../../config')
 const jwt = require('jsonwebtoken')
 router.use((req, res, next) => {
     let token = req.headers.authorization; // 获取token
@@ -205,5 +205,65 @@ router.post('/routers', (req, res) => {
         }
     })
 })
+
+
+//#region 站点
+
+router.get('/seting', (req, res) => {
+    let sql = `select title,subtitle,footer from setting where id = 1`;
+    conn.query(sql, (err, data) => {
+        if (err) {
+            res.json({
+                code: 400,
+                msg: "服务器错误！！！"
+            })
+        } else {
+            res.json({
+                code: 200,
+                msg: "获取成功",
+                data: data[0]
+            })
+        }
+    })
+})
+router.put('/seting', (req, res) => {
+    let sql = `UPDATE setting SET ? WHERE id = 1`;
+    conn.query(sql, req.body, (err, data) => {
+        if (err) {
+            res.json({
+                code: 400,
+                msg: "服务器错误！！！",
+                err
+            })
+        } else {
+            res.json({
+                code: 200,
+                msg: "修改成功",
+                data:true
+            })
+        }
+    })
+})
+
+router.put('/seting/footer', (req, res) => {
+    let sql = `UPDATE setting SET ? WHERE id = 1`;
+    conn.query(sql, req.body, (err, data) => {
+        if (err) {
+            res.json({
+                code: 400,
+                msg: "服务器错误！！！",
+                err
+            })
+        } else {
+            res.json({
+                code: 200,
+                msg: "修改成功",
+                data:true
+            })
+        }
+    })
+})
+
+//#endregion
 
 module.exports = router

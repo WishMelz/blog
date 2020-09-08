@@ -1,7 +1,7 @@
 const router = [
     {
         path: "/",
-        name: "About",
+        name: "index",
         component: () => import("@/views/Home/Index")
     },
     {
@@ -11,8 +11,11 @@ const router = [
     },
     {
         path: "/404",
-        name: "detailed",
-        component: () => import("@/views/Home/404")
+        name: "404",
+        component: () => import("@/views/Home/404"),
+        meta: {
+            title: "404"
+        }
     }
 ]
 

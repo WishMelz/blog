@@ -58,6 +58,7 @@ axios.interceptors.response.use(
                     //   errorLog(dataAxios.err)
                     break
                 case 2001:
+                    // 登录成功
                     localStorage.setItem('blogToken', dataAxios.data.token);
                     router.push('/back')
                     return true
@@ -65,9 +66,14 @@ axios.interceptors.response.use(
                     localStorage.removeItem('blogToken')
                     return false
                 case 2003:
-                    // 未登录[ 示例 ] 其它和后台约定的 code
+                    // 未登录[ 示例 ] 其它和后台约定的 code  token 错误
                     router.push('/login')
                     errorCreate(`[ code: 2003 - 登录过期 ] ${dataAxios.msg}: ${response.config.url}`)
+                    break
+                case 2004:
+                    // 文章 没有
+                    router.push('/404')
+                    // errorCreate(`[ code: 2004 - 文章错误 ] ${dataAxios.msg}: ${response.config.url}`)
                     break
                 default:
                     // 不是正确的 code

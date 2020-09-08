@@ -4,8 +4,8 @@
       <div class="inners">
         <div class="title">
           <div class="inner">
-            <h1>WishMeLzzz</h1>
-            <h2>生活其实很有趣</h2>
+            <h1 v-text="dataList.title">WishMeLzzz</h1>
+            <h2 v-text="dataList.subtitle">生活其实很有趣</h2>
           </div>
         </div>
       </div>
@@ -14,42 +14,67 @@
           <li v-for="(v,i) in routers" :key="i">
             <a :href="v.routerPath">{{ v.routerName }}</a>
           </li>
-       
         </ul>
       </div>
     </div>
     <router-view />
-    <footer>
-              浙ICP备14545548号
-    </footer>
+
+    <footer v-html="dataList.footer"></footer>
   </div>
 </template>
 
 <script>
 export default {
-  data(){
+  data() {
     return {
-      routers:[]
+      routers: [],
+      dataList: {}
+    };
+  },
+  methods: {
+    getDataList() {
+      this.$http
+        .get("web/routers")
+        .then(res => {
+          // console.log(res);
+          this.routers = res;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getTitle() {
+      this.$http
+        .get("web/seting")
+        .then(res => {
+          this.dataList = res;
+          if (document.title.split("|").length > 1) {
+            document.title =
+              this.dataList.title + " | " + document.title.split("|")[1];
+          } else {
+            document.title = this.dataList.title;
+          }
+          if (this.$route.name == "index") {
+            document.title = this.dataList.title + "-" + this.dataList.subtitle;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
-  methods:{
-    getDataList(){
-      this.$http.get('web/routers').then(res=>{
-        console.log(res);
-        this.routers = res;
-      })
-    }
-  },
-  created(){
-    this.getDataList()
+  created() {
+    this.getTitle();
+    this.getDataList();
   }
-
 };
 </script>
 
 <style scoped>
-
-
+.header .title {
+  background: url(https://img.xjh.me/desktop/bg/nature/63611769_p0.jpg) center
+    center / cover no-repeat rgb(34, 34, 34);
+}
 .header .title {
   background: url(https://img.xjh.me/random_img.php?type=bg&ctype=nature&return=302)
     center center / cover no-repeat rgb(34, 34, 34);
@@ -71,7 +96,6 @@ export default {
   padding: 60px 0;
   background: rgb(0 0 0 / 20%);
 }
-
 
 .header h1 {
   font-family: "Playball", cursive;
@@ -109,9 +133,9 @@ export default {
   margin-right: auto;
   margin-left: auto;
   width: 100%;
-    box-shadow: 0 1px 3px rgba(26,26,26,.1);
-    background: hsla(0,0%,100%,.6);
-    z-index: 1;
+  box-shadow: 0 1px 3px rgba(26, 26, 26, 0.1);
+  background: hsla(0, 0%, 100%, 0.6);
+  z-index: 1;
 }
 
 .header .nav ul {
@@ -139,29 +163,12 @@ export default {
   text-decoration: none;
 }
 
-
-
 .header .inners h2 {
   color: #e6e6e6;
 }
 
-/* .header h2 {
-  position: relative;
-  margin-top: -20px;
-  display: inline-block;
-  letter-spacing: 4px;
-  color: #797979;
-  font-size: 2em;
-  margin-bottom: 20px;
-} */
-
-
 footer {
   margin-top: 30px;
   width: 100%;
-  text-align: center;
-  padding: 50px 0;
 }
-
-
 </style>

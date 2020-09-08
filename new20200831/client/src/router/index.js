@@ -9,20 +9,29 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    component: () => import("@/views/Login")
+    component: () => import("@/views/Login"),
+    meta: {
+      title: "登录"
+    }
   },
   {
     path: "/",
     name: "index",
     component: () => import("@/views/Home"),
+    meta: {
+      title: "首页"
+    },
     children: [
       ...home
     ]
   },
   {
     path: "/back",
-    name: "index",
+    name: "back",
     component: () => import("@/views/Backstage.vue"),
+    meta: {
+      title: "后台管理系统"
+    },
     children: [
       ...backstage
     ]

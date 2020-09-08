@@ -12,7 +12,7 @@
           <el-input v-model="login.username" placeholder="用户名"></el-input>
         </el-form-item>
         <el-form-item prop="name">
-          <el-input v-model="login.password" type='password' placeholder="密码"></el-input>
+          <el-input v-model="login.password" type="password" placeholder="密码"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button @click="loginBtn">登录</el-button>
@@ -29,17 +29,20 @@ export default {
       login: { username: "admin", password: "admin" },
       rules: {
         username: { required: true, message: "请输入用户名", trigger: "blur" },
-        password: { required: true, message: "请输入密码", trigger: "blur" },
+        password: { required: true, message: "请输入密码", trigger: "blur" }
       }
     };
   },
   methods: {
     loginBtn() {
-      this.$http.post('be/login',{...this.login}).then(res=>{
-        console.log(res);
-      }).catch(err=>{
-        console.log(err);
-      })
+      this.$http
+        .post("be/login", { ...this.login })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };
@@ -47,9 +50,12 @@ export default {
 
 <style scoped>
 .login {
+  background: url(https://img.xjh.me/desktop/bg/nature/64937418_p0.jpg)
+    no-repeat center center;
+}
+.login {
   height: 100%;
   position: relative;
-  /* background-image: url(https://img.xjh.me/random_img.php?type=bg&ctype=nature&return=302); */
   background: url(https://img.xjh.me/random_img.php?type=bg&ctype=nature&return=302)
     no-repeat center center;
   background-size: cover;

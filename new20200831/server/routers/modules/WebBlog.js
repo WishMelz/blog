@@ -38,10 +38,10 @@ router.get('/blog/:pageNum/:pageSize', (req, res) => {
 
 //  获取文章   单个
 router.get('/blog/:id', (req, res) => {
-    let id = req.params.id;
-    if (!id) {
+    let id = req.params.id - 0;
+    if (!id || !(id * 1 == id)) {
         res.json({
-            code: 400,
+            code: 2004,
             msg: "无效数据"
         })
         return;
@@ -55,11 +55,19 @@ router.get('/blog/:id', (req, res) => {
                 err
             })
         } else {
-            res.json({
-                code: 200,
-                msg: "成功",
-                data: data[0]
-            })
+            if (data.length == 0) {
+                res.json({
+                    code: 2004,
+                    msg: "成功",
+                    data: false
+                })
+            } else {
+                res.json({
+                    code: 200,
+                    msg: "成功",
+                    data: data[0]
+                })
+            }
         }
     })
 })
@@ -100,5 +108,46 @@ router.get('/atps', (req, res) => {
     })
 })
 
+//#region 站点
 
+router.get('/seting', (req, res) => {
+    let sql = `select title,subtitle,footer from setting where id = 1`;
+    conn.query(sql, (err, data) => {
+        if (err) {
+            res.json({
+                code: 400,
+                msg: "服务器错误！！！"
+            })
+        } else {
+            res.json({
+                code: 200,
+                msg: "获取成功",
+                data: data[0]
+            })
+        }
+    })
+})
+// router.put('/seting', (req, res) => {
+//     let type = req.body.type;
+//     let data = req.body.data;
+//     console.log(req.body);
+//     return
+//     let sql = `select title,subtitle from setting where id = 1`;
+//     conn.query(sql, (err, data) => {
+//         if (err) {
+//             res.json({
+//                 code: 400,
+//                 msg: "服务器错误！！！"
+//             })
+//         } else {
+//             res.json({
+//                 code: 200,
+//                 msg: "获取成功",
+//                 data
+//             })
+//         }
+//     })
+// })
+
+//#endregion
 module.exports = router

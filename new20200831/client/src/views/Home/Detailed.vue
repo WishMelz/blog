@@ -14,27 +14,34 @@ export default {
   data() {
     return {
       fullscreenLoading: false,
-      blogData:{}
+      blogData: {}
     };
   },
-  methods:{
-    getDataList(){
+  methods: {
+    getDataList() {
       let id = this.$route.query.p;
-      if(!id){
-        this.$route.push('/404')
+      if (!id) {
+        this.$route.push("/404");
         return;
       }
-      this.$http.get('web/blog/'+id).then(res=>{
-        console.log(res);
-        this.blogData = res;
-      }).catch(err=>{
-        console.log(err);
-      })
+      this.fullscreenLoading = true;
+      this.$http
+        .get("web/blog/" + id)
+        .then(res => {
+          this.fullscreenLoading = false;
+          this.blogData = res;
+          console.log(document.title);
+          document.title = document.title + ' | ' + res.title
+          console.log(document.title);
+        })
+        .catch(err => {
+          this.fullscreenLoading = false;
+          console.log(err);
+        });
     }
   },
   created() {
-    this.getDataList()
-    console.log(this.$route);
+    this.getDataList();
   }
 };
 </script>
@@ -75,6 +82,6 @@ export default {
 }
 
 .postCont {
-  padding-top: 80px;
+  padding-top: 20px;
 }
 </style>

@@ -22,6 +22,22 @@ Vue.filter('getTime', function (v) {
     return strData
   }
 })
+router.beforeEach((to,from,next)=>{
+  if(to.meta.title){
+    document.title = to.meta.title
+  }
+  if(to.path == '/' || to.path == '/detailed' || to.path == '/login'){
+    next()
+  }else {
+    let token = localStorage.getItem('blogToken');
+    if(token){
+      next()
+    }else {
+      next('/login')
+    }
+  }
+  next()
+})
 new Vue({
   router,
   store,

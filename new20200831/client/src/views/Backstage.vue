@@ -2,7 +2,7 @@
   <div class="back">
     <el-container>
       <el-header>
-        <div>API</div>
+        <div>后台管理系统</div>
       </el-header>
       <el-container>
         <el-aside width="200px" id="ment-list">
@@ -35,10 +35,10 @@
             <el-submenu index="4">
               <template slot="title">
                 <i class="el-icon-collection-tag"></i>
-                <span>舔狗日记</span>
+                <span>设置</span>
               </template>
               <el-menu-item-group>
-                <el-menu-item index="tg">日记</el-menu-item>
+                <el-menu-item index="/be/setting">站点设置</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
             <!-- <el-menu-item index="music">
